@@ -1,0 +1,14 @@
+calc-shell {
+    height: 600px;
+    width: 600px;
+    background-color: black;
+}
+
+.display {
+    background-color: whitesmoke;
+    color: black;
+}
+
+.buttons {
+    color: black
+}
