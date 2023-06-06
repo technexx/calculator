@@ -7,15 +7,18 @@
 }
 
 .display {
+    display: flex;
+    justify-content: end;
+    align-items: center;
     background-color: purple;
     color: black;
     height: 100px;
     width: auto;
+    font-size: 64px;
 }
 
 .buttons {
     display: flex;
-    height: vh;
     color: black
 }
 

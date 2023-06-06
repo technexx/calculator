@@ -1,6 +1,9 @@
+const display = document.querySelector(".display")
 const leftButtonsContainer = document.querySelector(".number-buttons")
+const numberArray = [7, 8, 9, 4, 5, 6, 1, 2 ,3, 0, "."]
 
-let numberArray = [7, 8, 9, 4, 5, 6, 1, 2 ,3, 0, "."]
+let displayValue = "0"
+display.innerText = displayValue
 
 for (let i=0; i<numberArray.length; i++) {
     createValueButtons(i)
@@ -16,4 +19,15 @@ function createValueButtons(position) {
     if (position === 9) content.style.width = "300px"
 
     leftButtonsContainer.appendChild(content)
+
+    setButtonListeners(content, position)
 }
+
+function setButtonListeners(element, position) {
+    element.addEventListener("click", () => {
+        displayValue += numberArray[position]
+        display.innerText = displayValue
+    })
+}
+
+
