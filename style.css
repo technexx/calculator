@@ -1,4 +1,4 @@
-calc-shell {
+#calc-shell {
     height: 600px;
     width: 600px;
     background-color: black;
@@ -11,4 +11,16 @@ calc-shell {
 
 .buttons {
     color: black
+}
+
+.left-buttons {
+
+}
+
+.right-buttons {
+    background-color: #f33131af;
+}
+
+.state-buttons {
+    background-color: darkslategray;
 }
