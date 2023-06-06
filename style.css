@@ -1,26 +1,48 @@
 #calc-shell {
-    height: 600px;
+    display: flex;
+    flex-direction: column;
+    height: 800px;
     width: 600px;
     background-color: black;
 }
 
 .display {
-    background-color: whitesmoke;
+    background-color: purple;
     color: black;
+    height: 150px;
+    width: auto;
 }
 
 .buttons {
+    display: flex;
+    height: vh;
     color: black
 }
 
 .left-buttons {
-
-}
-
-.right-buttons {
-    background-color: #f33131af;
+    display: flex;
+    flex-wrap: wrap;
+    flex-basis: .75;
+    flex-direction: column;
 }
 
 .state-buttons {
     background-color: darkslategray;
+}
+
+.number-buttons {
+    background-color: green;
+}
+
+.right-buttons {
+    display: flex;
+    flex-direction: column;
+    flex-basis: .25;
+    background-color: #f33131af;
+}
+
+.right-buttons button {
+    background-color: aqua;
+    height: 150px;
+    width: 150px
 }
