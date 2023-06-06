@@ -9,9 +9,11 @@ for (let i=0; i<numberArray.length; i++) {
 function createValueButtons(position) {
     const content = document.createElement("button")
     content.id = ("id", "button-" + numberArray[position])
-    content.value = numberArray[position]
+    content.textContent = numberArray[position]
     content.style.height = "100px"
     content.style.width = "150px"
+
+    if (position === 9) content.style.width = "300px"
 
     leftButtonsContainer.appendChild(content)
 }

@@ -1,7 +1,7 @@
 #calc-shell {
     display: flex;
     flex-direction: column;
-    height: 800px;
+    height: 600px;
     width: 600px;
     background-color: black;
 }
@@ -9,7 +9,7 @@
 .display {
     background-color: purple;
     color: black;
-    height: 150px;
+    height: 100px;
     width: auto;
 }
 
@@ -22,7 +22,6 @@
 .left-buttons {
     display: flex;
     flex-wrap: wrap;
-    flex-basis: .75;
     flex-direction: column;
 }
 
@@ -30,19 +29,27 @@
     background-color: darkslategray;
 }
 
+.state-buttons button {
+    height: 100px;
+    width: 150px;
+}
+
 .number-buttons {
     background-color: green;
+}
+
+.number-buttons #button-0{
+    width: 300px;
 }
 
 .right-buttons {
     display: flex;
     flex-direction: column;
-    flex-basis: .25;
     background-color: #f33131af;
 }
 
 .right-buttons button {
     background-color: aqua;
-    height: 150px;
-    width: 150px
+    height: 100px;
+    width: 100px;
 }
