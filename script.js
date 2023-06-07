@@ -1,14 +1,15 @@
-const display = document.querySelector(".display")
+const equationDisplay = document.querySelector(".display")
 const leftButtonsContainer = document.querySelector(".number-buttons")
-const numberButtonArray = [7, 8, 9, 4, 5, 6, 1, 2 ,3, 0, "."]
+const numberButtonArray = ["7", "8", "9", "4", "5", "6", "1", "2" ,"3", "0", "."]
 
 let displayValue = "0"
-display.innerText = displayValue
+equationDisplay.innerText = displayValue
 
-let typeOfCalculation = ""
-let workingNumberArray = [0, 0]
+let typeOfCalculation = "0"
+let workingNumberArray = ["0", "0"]
+let equationArray = [0, 0, 0]
 
-setManipulationButtonListeners()
+setOperationButtonListeners()
 
 for (let i=0; i<numberButtonArray.length; i++) {
     createValueButtons(i)
@@ -30,13 +31,25 @@ function createValueButtons(position) {
 
 function setNumberButtonListeners(element, position) {
     element.addEventListener("click", () => {
+        console.log(displayValue)
+
+        if (displayValue == "0") {
+            if (numberButtonArray[position] !== ".") {
+                displayValue = ""
+            }
+    } else {
+        if (numberButtonArray[position] === ".") {
+            if (displayValue.includes(".")) {
+                return
+            }
+        }
+    }
         displayValue += numberButtonArray[position]
-        display.innerText = displayValue
+        equationDisplay.innerText = displayValue
     })
 }
 
-function setManipulationButtonListeners() {
-    // let buttons = document.querySelector(".right-buttons").children
+function setOperationButtonListeners() {
     let buttons = document.querySelectorAll(".right-buttons button")
     console.log(buttons)
 
@@ -44,28 +57,34 @@ function setManipulationButtonListeners() {
         buttons[i].addEventListener("click", () => {
             console.log(buttons[i].id)
 
+            if ((equationArray[0] === 0) || (equationArray[2] === 0)) {
+                return
+            }
+
             if (buttons[i].id === "divide-button") {
-                displayValue += " / "
+                equationDisplay += " / "
                 typeOfCalculation = "division"
             }
 
             if (buttons[i].id === "multiply-button") {
-                displayValue += " * "
+                equationDisplay += " * "
                 typeOfCalculation = "multiplication"
             }
 
             if (buttons[i].id === "subtract-button") {
-                displayValue += " - "
+                displaequationDisplayyValue += " - "
                 typeOfCalculation = "subtraction"
             }
             if (buttons[i].id === "add-button") {
-                displayValue += " + "
+                equationDisplay += " + "
                 typeOfCalculation = "addition"
             }
             if (i.id === "equals-button") {
+                workingNumberArray[0]
             }
 
             display.innerText = displayValue
+            equationArray[1] = displayValue
         })
     }
 }
