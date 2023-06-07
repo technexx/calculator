@@ -9,6 +9,7 @@ let typeOfCalculation = "0"
 let workingNumberArray = ["0", "0"]
 let equationArray = [0, 0, 0]
 
+setStateButtonListeners()
 setOperationButtonListeners()
 
 for (let i=0; i<numberButtonArray.length; i++) {
@@ -27,6 +28,27 @@ function createValueButtons(position) {
     leftButtonsContainer.appendChild(content)
 
     setNumberButtonListeners(content, position)
+}
+
+function setStateButtonListeners() {
+    let buttons = document.querySelectorAll(".state-buttons button")
+
+    buttons.forEach((item) => {
+        item.addEventListener("click", () => {
+            if (item.id === "clear-button") {
+                displayValue = 0
+                console.log("clear!")
+            }
+            if (item.id === "pos-neg-toggle-button") {
+                if (displayValue !== 0) displayValue = "- " + displayValue
+            }
+            if (item.id === "percent-button") {
+                if (displayValue !== 0) displayValue += " %"
+            }
+            
+            equationDisplay.innerText = displayValue
+        })
+    });
 }
 
 function setNumberButtonListeners(element, position) {
@@ -53,40 +75,41 @@ function setOperationButtonListeners() {
     let buttons = document.querySelectorAll(".right-buttons button")
     console.log(buttons)
 
-    for (let i=0; i<buttons.length; i++) {
-        buttons[i].addEventListener("click", () => {
-            console.log(buttons[i].id)
-
+    buttons.forEach((item) => {
+        item.addEventListener("click", () => {
+            //Stops our operation buttons
             if ((equationArray[0] === 0) || (equationArray[2] === 0)) {
                 return
             }
 
-            if (buttons[i].id === "divide-button") {
-                equationDisplay += " / "
+            console.log(item.id)
+
+            if (item.id === "divide-button") {
+                displayValue += " / "
                 typeOfCalculation = "division"
             }
 
-            if (buttons[i].id === "multiply-button") {
-                equationDisplay += " * "
+            if (item.id === "multiply-button") {
+                displayValue += " * "
                 typeOfCalculation = "multiplication"
             }
 
-            if (buttons[i].id === "subtract-button") {
-                displaequationDisplayyValue += " - "
+            if (item.id === "subtract-button") {
+                displayValue += " - "
                 typeOfCalculation = "subtraction"
             }
-            if (buttons[i].id === "add-button") {
-                equationDisplay += " + "
+            if (item.id === "add-button") {
+                displayValue += " + "
                 typeOfCalculation = "addition"
             }
-            if (i.id === "equals-button") {
+            if (item.id === "equals-button") {
                 workingNumberArray[0]
             }
 
-            display.innerText = displayValue
+            equationDisplay.innerText = displayValue
             equationArray[1] = displayValue
         })
-    }
+    });
 }
 
 function add(numOne, numTwo) { return numOne + numTwo };
