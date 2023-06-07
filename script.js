@@ -2,12 +2,14 @@ const equationDisplay = document.querySelector(".display")
 const leftButtonsContainer = document.querySelector(".number-buttons")
 const numberButtonArray = ["7", "8", "9", "4", "5", "6", "1", "2" ,"3", "0", "."]
 
-let displayValue = "0"
-equationDisplay.innerText = displayValue
-
+let storedValue = "0"
 let typeOfCalculation = "0"
 let workingNumberArray = ["0", "0"]
-let equationArray = [0, 0, 0]
+
+let PRE_OPERATION = 0
+let MID_OPERATION = 1
+let POST_OPERATION = 2
+let operationState = 0
 
 setStateButtonListeners()
 setOperationButtonListeners()
@@ -30,44 +32,27 @@ function createValueButtons(position) {
     setNumberButtonListeners(content, position)
 }
 
-function setStateButtonListeners() {
-    let buttons = document.querySelectorAll(".state-buttons button")
-
-    buttons.forEach((item) => {
-        item.addEventListener("click", () => {
-            if (item.id === "clear-button") {
-                displayValue = 0
-                console.log("clear!")
-            }
-            if (item.id === "pos-neg-toggle-button") {
-                if (displayValue !== 0) displayValue = "- " + displayValue
-            }
-            if (item.id === "percent-button") {
-                if (displayValue !== 0) displayValue += " %"
-            }
-            
-            equationDisplay.innerText = displayValue
-        })
-    });
-}
-
 function setNumberButtonListeners(element, position) {
     element.addEventListener("click", () => {
-        console.log(displayValue)
+        console.log(equationDisplay.innerText)
 
-        if (displayValue == "0") {
+        if (equationDisplay.innerText == "0") {
             if (numberButtonArray[position] !== ".") {
-                displayValue = ""
+                equationDisplay.innerText = ""
             }
     } else {
         if (numberButtonArray[position] === ".") {
-            if (displayValue.includes(".")) {
+            if (equationDisplay.innerText.includes(".")) {
                 return
             }
         }
     }
-        displayValue += numberButtonArray[position]
-        equationDisplay.innerText = displayValue
+    equationDisplay.innerText += numberButtonArray[position]
+
+        if (operationState == PRE_OPERATION) {
+            storedValue = equationDisplay.innerText
+            workingNumberArray[0] = storedValue
+        }
     })
 }
 
@@ -78,36 +63,56 @@ function setOperationButtonListeners() {
     buttons.forEach((item) => {
         item.addEventListener("click", () => {
             //Stops our operation buttons
-            if ((equationArray[0] === 0) || (equationArray[2] === 0)) {
+            if (operationState === PRE_OPERATION || operationState === MID_OPERATION) {
                 return
             }
 
-            console.log(item.id)
-
             if (item.id === "divide-button") {
-                displayValue += " / "
+                equationDisplay.innerText  += " / "
                 typeOfCalculation = "division"
             }
 
             if (item.id === "multiply-button") {
-                displayValue += " * "
+                equationDisplay.innerText  += " * "
                 typeOfCalculation = "multiplication"
             }
 
             if (item.id === "subtract-button") {
-                displayValue += " - "
+                equationDisplay.innerText += " - "
                 typeOfCalculation = "subtraction"
             }
             if (item.id === "add-button") {
-                displayValue += " + "
+                equationDisplay.innerText  += " + "
                 typeOfCalculation = "addition"
             }
+            
+            operationState === MID_OPERATION
             if (item.id === "equals-button") {
-                workingNumberArray[0]
+                if (equationDisplay.innerText !== 0) {
+                    operationState === POST_OPERATION
+                    workingNumberArray[1] = displayValue
+                }
             }
+        })
+    });
+}
 
-            equationDisplay.innerText = displayValue
-            equationArray[1] = displayValue
+function setStateButtonListeners() {
+    let buttons = document.querySelectorAll(".state-buttons button")
+
+    buttons.forEach((item) => {
+        item.addEventListener("click", () => {
+            if (item.id === "clear-button") {
+                equationDisplay.innerText = 0
+                console.log("clear!")
+            }
+            if (item.id === "pos-neg-toggle-button") {
+                if (equationDisplay.innerText !== 0 && !equationDisplay.innerText.includes("-")) equationDisplay.innerText = "- " + equationDisplay.innerText;
+            }
+            if (item.id === "percent-button") {
+                if (equationDisplay.innerText !== 0 && !equationDisplay.innerText.includes("%") && !equationDisplay.innerText .includes("-")) equationDisplay.innerText  += " %"
+            }
+            
         })
     });
 }
