@@ -2,15 +2,11 @@ const equationDisplay = document.querySelector(".display")
 const leftButtonsContainer = document.querySelector(".number-buttons")
 const numberButtonArray = ["7", "8", "9", "4", "5", "6", "1", "2" ,"3", "0", "."]
 
+equationDisplay.innerText = "0"
 let storedValue = "0"
 let typeOfCalculation = "0"
 let operatorSymbol = ""
 let workingNumberArray = ["0", "0"]
-
-let PRE_OPERATION = 0
-let MID_OPERATION = 1
-let POST_OPERATION = 2
-let operationState = 0
 
 setStateButtonListeners()
 setOperationButtonListeners()
@@ -48,22 +44,19 @@ function setNumberButtonListeners(element, position) {
             }
         }
     }
+
     equationDisplay.innerText += numberButtonArray[position]
 
-    operationState = MID_OPERATION
-
-        if (operationState === PRE_OPERATION || operationState === POST_OPERATION) {
+        if (!containsOperative(equationDisplay.innerText)) {
             storedValue = equationDisplay.innerText
             workingNumberArray[0] = storedValue
-        }
-
-        if (operationState === MID_OPERATION) {
-            let equationString = equationDisplay.innerText.toString()
+        } else {
+                       let equationString = equationDisplay.innerText.toString()
             let splitString = equationString.split(operatorSymbol)
             storedValue = splitString[1]
 
             console.log(equationString)
-            console.log(storedValue)
+            console.log(storedValue) 
         }
     })
 }
@@ -74,10 +67,9 @@ function setOperationButtonListeners() {
 
     buttons.forEach((item) => {
         item.addEventListener("click", () => {
-            //Stops our operation buttons
-            // if (operationState === PRE_OPERATION || operationState === MID_OPERATION) {
-            //     return
-            // }
+            if (containsOperative(equationDisplay.innerText) || equationDisplay.innerText === "0") {
+                return
+            }
 
             if (item.id === "divide-button") {
                 equationDisplay.innerText  += " / "
@@ -102,11 +94,8 @@ function setOperationButtonListeners() {
                 operatorSymbol = "+"
             }
             
-            operationState === MID_OPERATION
-
             if (item.id === "equals-button") {
                 if (equationDisplay.innerText !== 0) {
-                    operationState === POST_OPERATION
                     workingNumberArray[1] = displayValue
                 }
             }
@@ -140,3 +129,7 @@ function subtract(numOne, numTwo) { return numOne - numTwo};
 function multiply(numOne, numTwo) { return numOne * numTwo };
 
 function divide(numOne, numTwo) { return numOne / numTwo };
+
+function containsOperative(equation) {
+    return (equation.includes("-") || equation.includes("+") || equation.includes("*", equation.includes("/")))
+}
