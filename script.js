@@ -4,6 +4,7 @@ const numberButtonArray = ["7", "8", "9", "4", "5", "6", "1", "2" ,"3", "0", "."
 
 let storedValue = "0"
 let typeOfCalculation = "0"
+let operatorSymbol = ""
 let workingNumberArray = ["0", "0"]
 
 let PRE_OPERATION = 0
@@ -34,7 +35,7 @@ function createValueButtons(position) {
 
 function setNumberButtonListeners(element, position) {
     element.addEventListener("click", () => {
-        console.log(equationDisplay.innerText)
+        // console.log(equationDisplay.innerText)
 
         if (equationDisplay.innerText == "0") {
             if (numberButtonArray[position] !== ".") {
@@ -49,9 +50,20 @@ function setNumberButtonListeners(element, position) {
     }
     equationDisplay.innerText += numberButtonArray[position]
 
-        if (operationState == PRE_OPERATION) {
+    operationState = MID_OPERATION
+
+        if (operationState === PRE_OPERATION || operationState === POST_OPERATION) {
             storedValue = equationDisplay.innerText
             workingNumberArray[0] = storedValue
+        }
+
+        if (operationState === MID_OPERATION) {
+            let equationString = equationDisplay.innerText.toString()
+            let splitString = equationString.split(operatorSymbol)
+            storedValue = splitString[1]
+
+            console.log(equationString)
+            console.log(storedValue)
         }
     })
 }
@@ -63,30 +75,35 @@ function setOperationButtonListeners() {
     buttons.forEach((item) => {
         item.addEventListener("click", () => {
             //Stops our operation buttons
-            if (operationState === PRE_OPERATION || operationState === MID_OPERATION) {
-                return
-            }
+            // if (operationState === PRE_OPERATION || operationState === MID_OPERATION) {
+            //     return
+            // }
 
             if (item.id === "divide-button") {
                 equationDisplay.innerText  += " / "
                 typeOfCalculation = "division"
+                operatorSymbol = "/"
             }
 
             if (item.id === "multiply-button") {
                 equationDisplay.innerText  += " * "
                 typeOfCalculation = "multiplication"
+                operatorSymbol = "*"
             }
 
             if (item.id === "subtract-button") {
                 equationDisplay.innerText += " - "
                 typeOfCalculation = "subtraction"
+                operatorSymbol = "-"
             }
             if (item.id === "add-button") {
                 equationDisplay.innerText  += " + "
                 typeOfCalculation = "addition"
+                operatorSymbol = "+"
             }
             
             operationState === MID_OPERATION
+
             if (item.id === "equals-button") {
                 if (equationDisplay.innerText !== 0) {
                     operationState === POST_OPERATION
@@ -104,7 +121,6 @@ function setStateButtonListeners() {
         item.addEventListener("click", () => {
             if (item.id === "clear-button") {
                 equationDisplay.innerText = 0
-                console.log("clear!")
             }
             if (item.id === "pos-neg-toggle-button") {
                 if (equationDisplay.innerText !== 0 && !equationDisplay.innerText.includes("-")) equationDisplay.innerText = "- " + equationDisplay.innerText;
