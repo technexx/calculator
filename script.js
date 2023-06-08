@@ -70,11 +70,10 @@ function setOperationButtonListeners() {
                 return
             }
 
-            if (item.id === "equals-button" || containsOperativeSymbol(equationDisplay.textContent)) {
-                if (workingNumberArray.length === 2) {
-                    equationDisplay.textContent = performOperation(typeOfCalculation, workingNumberArray[0], workingNumberArray[1])
+            if (workingNumberArray.length == 2) {
+                if (item.id === "equals-button") {
+                    performOperation()
                 }
-                return
             }
 
             if (item.id === "divide-button") {
@@ -94,41 +93,24 @@ function setOperationButtonListeners() {
                 typeOfCalculation = "subtraction"
                 operatorSymbol = "-"
             }
+
             if (item.id === "add-button") {
                 equationDisplay.textContent  += " + "
                 typeOfCalculation = "addition"
                 operatorSymbol = "+"
             }
-            
-            if (item.id === "equals-button") {
-                // if (equationDisplay.textContent !== 0) {
-                //     workingNumberArray[1] = displayValue
-                // }
-            }
         })
     });
 }
 
-function setStateButtonListeners() {
-    let buttons = document.querySelectorAll(".state-buttons button")
+function performOperation() {
+    let answer = operationResult(typeOfCalculation, workingNumberArray[0], workingNumberArray[1])
 
-    buttons.forEach((item) => {
-        item.addEventListener("click", () => {
-            if (item.id === "clear-button") {
-                equationDisplay.textContent = 0
-            }
-            if (item.id === "pos-neg-toggle-button") {
-                if (equationDisplay.textContent !== 0 && !equationDisplay.textContent.includes("-")) equationDisplay.textContent = "- " + equationDisplay.textContent;
-            }
-            if (item.id === "percent-button") {
-                if (equationDisplay.textContent !== 0 && !equationDisplay.textContent.includes("%") && !equationDisplay.textContent .includes("-")) equationDisplay.textContent  += " %"
-            }
-            
-        })
-    });
+    workingNumberArray[0] = answer
+    equationDisplay.textContent = answer
 }
 
-function performOperation(typeOfOperation, numOne, numTwo) {
+function operationResult(typeOfOperation, numOne, numTwo) {
     numOne = parseInt(numOne)
     numTwo = parseInt(numTwo)
 
@@ -148,4 +130,27 @@ function performOperation(typeOfOperation, numOne, numTwo) {
 
 function containsOperativeSymbol(equation) {
     return (equation.includes("-") || equation.includes("+") || equation.includes("*", equation.includes("/")))
+}
+
+function setWorkingNumberArray(numOne, numTwo) {
+    
+}
+
+function setStateButtonListeners() {
+    let buttons = document.querySelectorAll(".state-buttons button")
+
+    buttons.forEach((item) => {
+        item.addEventListener("click", () => {
+            if (item.id === "clear-button") {
+                equationDisplay.textContent = 0
+            }
+            if (item.id === "pos-neg-toggle-button") {
+                if (equationDisplay.textContent !== 0 && !equationDisplay.textContent.includes("-")) equationDisplay.textContent = "- " + equationDisplay.textContent;
+            }
+            if (item.id === "percent-button") {
+                if (equationDisplay.textContent !== 0 && !equationDisplay.textContent.includes("%") && !equationDisplay.textContent .includes("-")) equationDisplay.textContent  += " %"
+            }
+            
+        })
+    });
 }
