@@ -2,7 +2,7 @@ const equationDisplay = document.querySelector(".display")
 const leftButtonsContainer = document.querySelector(".number-buttons")
 const numberButtonArray = ["7", "8", "9", "4", "5", "6", "1", "2" ,"3", "0", "."]
 
-equationDisplay.innerText = "0"
+equationDisplay.textContent = "0"
 let storedValue = "0"
 let typeOfCalculation = "0"
 let operatorSymbol = ""
@@ -31,33 +31,32 @@ function createValueButtons(position) {
 
 function setNumberButtonListeners(element, position) {
     element.addEventListener("click", () => {
-        // console.log(equationDisplay.innerText)
-
-        if (equationDisplay.innerText == "0") {
+        if (equationDisplay.textContent == "0") {
             if (numberButtonArray[position] !== ".") {
-                equationDisplay.innerText = ""
+                equationDisplay.textContent = ""
             }
-    } else {
+       } else {
         if (numberButtonArray[position] === ".") {
-            if (equationDisplay.innerText.includes(".")) {
+            if (equationDisplay.textContent.includes(".")) {
                 return
             }
         }
-    }
+        }
 
-    equationDisplay.innerText += numberButtonArray[position]
-
-        if (!containsOperative(equationDisplay.innerText)) {
-            storedValue = equationDisplay.innerText
+        if (!containsOperative(equationDisplay.textContent)) {
+            storedValue = equationDisplay.textContent
             workingNumberArray[0] = storedValue
         } else {
-                       let equationString = equationDisplay.innerText.toString()
+            let equationString = equationDisplay.textContent.toString()
             let splitString = equationString.split(operatorSymbol)
             storedValue = splitString[1]
-
-            console.log(equationString)
-            console.log(storedValue) 
         }
+
+        equationDisplay.textContent += numberButtonArray[position]
+
+
+        console.log("stored value is " + storedValue)
+        console.log("working numberarray is " + workingNumberArray)
     })
 }
 
@@ -67,35 +66,35 @@ function setOperationButtonListeners() {
 
     buttons.forEach((item) => {
         item.addEventListener("click", () => {
-            if (containsOperative(equationDisplay.innerText) || equationDisplay.innerText === "0") {
+            if (containsOperative(equationDisplay.textContent) || equationDisplay.textContent === "0") {
                 return
             }
 
             if (item.id === "divide-button") {
-                equationDisplay.innerText  += " / "
+                equationDisplay.textContent  += " /"
                 typeOfCalculation = "division"
                 operatorSymbol = "/"
             }
 
             if (item.id === "multiply-button") {
-                equationDisplay.innerText  += " * "
+                equationDisplay.textContent  += " * "
                 typeOfCalculation = "multiplication"
                 operatorSymbol = "*"
             }
 
             if (item.id === "subtract-button") {
-                equationDisplay.innerText += " - "
+                equationDisplay.textContent += " - "
                 typeOfCalculation = "subtraction"
                 operatorSymbol = "-"
             }
             if (item.id === "add-button") {
-                equationDisplay.innerText  += " + "
+                equationDisplay.textContent  += " + "
                 typeOfCalculation = "addition"
                 operatorSymbol = "+"
             }
             
             if (item.id === "equals-button") {
-                if (equationDisplay.innerText !== 0) {
+                if (equationDisplay.textContent !== 0) {
                     workingNumberArray[1] = displayValue
                 }
             }
@@ -109,13 +108,13 @@ function setStateButtonListeners() {
     buttons.forEach((item) => {
         item.addEventListener("click", () => {
             if (item.id === "clear-button") {
-                equationDisplay.innerText = 0
+                equationDisplay.textContent = 0
             }
             if (item.id === "pos-neg-toggle-button") {
-                if (equationDisplay.innerText !== 0 && !equationDisplay.innerText.includes("-")) equationDisplay.innerText = "- " + equationDisplay.innerText;
+                if (equationDisplay.textContent !== 0 && !equationDisplay.textContent.includes("-")) equationDisplay.textContent = "- " + equationDisplay.textContent;
             }
             if (item.id === "percent-button") {
-                if (equationDisplay.innerText !== 0 && !equationDisplay.innerText.includes("%") && !equationDisplay.innerText .includes("-")) equationDisplay.innerText  += " %"
+                if (equationDisplay.textContent !== 0 && !equationDisplay.textContent.includes("%") && !equationDisplay.textContent .includes("-")) equationDisplay.textContent  += " %"
             }
             
         })
