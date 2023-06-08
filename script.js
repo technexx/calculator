@@ -41,19 +41,19 @@ function setNumberButtonListeners(element, position) {
                 return
             }
         }
-        }
+    }
 
-        if (!containsOperative(equationDisplay.textContent)) {
+    equationDisplay.textContent += numberButtonArray[position]
+
+        if (!containsOperativeSymbol(equationDisplay.textContent)) {
             storedValue = equationDisplay.textContent
             workingNumberArray[0] = storedValue
         } else {
             let equationString = equationDisplay.textContent.toString()
             let splitString = equationString.split(operatorSymbol)
             storedValue = splitString[1]
+            workingNumberArray[1] = storedValue
         }
-
-        equationDisplay.textContent += numberButtonArray[position]
-
 
         console.log("stored value is " + storedValue)
         console.log("working numberarray is " + workingNumberArray)
@@ -66,12 +66,20 @@ function setOperationButtonListeners() {
 
     buttons.forEach((item) => {
         item.addEventListener("click", () => {
-            if (containsOperative(equationDisplay.textContent) || equationDisplay.textContent === "0") {
+            if (equationDisplay.textContent === "0") {
+                return
+            }
+
+            if (item.id === "equals-button" || containsOperativeSymbol(equationDisplay.textContent)) {
+                console.log("okay")
+                if (workingNumberArray.length === 2) {
+                    equationDisplay.textContent = performOperation(typeOfCalculation, workingNumberArray[0], workingNumberArray[1])
+                }
                 return
             }
 
             if (item.id === "divide-button") {
-                equationDisplay.textContent  += " /"
+                equationDisplay.textContent  += " / "
                 typeOfCalculation = "division"
                 operatorSymbol = "/"
             }
@@ -94,9 +102,9 @@ function setOperationButtonListeners() {
             }
             
             if (item.id === "equals-button") {
-                if (equationDisplay.textContent !== 0) {
-                    workingNumberArray[1] = displayValue
-                }
+                // if (equationDisplay.textContent !== 0) {
+                //     workingNumberArray[1] = displayValue
+                // }
             }
         })
     });
@@ -121,14 +129,24 @@ function setStateButtonListeners() {
     });
 }
 
-function add(numOne, numTwo) { return numOne + numTwo };
+function performOperation(typeOfOperation, numOne, numTwo) {
+    numOne = parseInt(numOne)
+    numTwo = parseInt(numTwo)
 
-function subtract(numOne, numTwo) { return numOne - numTwo};
+    if (typeOfOperation == "division") {
+        return numOne / numTwo
+    }
+    if (typeOfOperation == "multiplication") {
+        return numOne * numTwo
+    }
+    if (typeOfOperation == "subtraction") {
+        return numOne - numTwo
+    }
+    if (typeOfOperation == "addition") {
+        return numOne + numTwo
+    }
+}
 
-function multiply(numOne, numTwo) { return numOne * numTwo };
-
-function divide(numOne, numTwo) { return numOne / numTwo };
-
-function containsOperative(equation) {
+function containsOperativeSymbol(equation) {
     return (equation.includes("-") || equation.includes("+") || equation.includes("*", equation.includes("/")))
 }
