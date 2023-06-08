@@ -6,7 +6,7 @@ equationDisplay.textContent = "0"
 let storedValue = "0"
 let typeOfCalculation = "0"
 let operatorSymbol = ""
-let workingNumberArray = ["0", "0"]
+let workingNumberArray = ["0"]
 
 setStateButtonListeners()
 setOperationButtonListeners()
@@ -71,10 +71,10 @@ function setOperationButtonListeners() {
             }
 
             if (workingNumberArray.length == 2) {
-                if (item.id === "equals-button") {
-                    performOperation()
-                }
+                performOperation()
             }
+
+            if (!containsOperativeSymbol(equationDisplay.textContent)) {
 
             if (item.id === "divide-button") {
                 equationDisplay.textContent  += " / "
@@ -99,6 +99,7 @@ function setOperationButtonListeners() {
                 typeOfCalculation = "addition"
                 operatorSymbol = "+"
             }
+        }
         })
     });
 }
@@ -107,7 +108,11 @@ function performOperation() {
     let answer = operationResult(typeOfCalculation, workingNumberArray[0], workingNumberArray[1])
 
     workingNumberArray[0] = answer
+    workingNumberArray.pop()
     equationDisplay.textContent = answer
+
+    console.log("end operation array is " + workingNumberArray)
+
 }
 
 function operationResult(typeOfOperation, numOne, numTwo) {
@@ -143,6 +148,7 @@ function setStateButtonListeners() {
         item.addEventListener("click", () => {
             if (item.id === "clear-button") {
                 equationDisplay.textContent = 0
+                workingNumberArray = ["0"]
             }
             if (item.id === "pos-neg-toggle-button") {
                 if (equationDisplay.textContent !== 0 && !equationDisplay.textContent.includes("-")) equationDisplay.textContent = "- " + equationDisplay.textContent;
