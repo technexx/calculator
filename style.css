@@ -13,10 +13,7 @@
     background-color: purple;
     color: black;
     height: 100px;
-    width: auto;
     font-size: 64px;
-    box-sizing: border-box;
-
 }
 
 .buttons {
@@ -26,31 +23,22 @@
 
 .left-buttons {
     display: flex;
-    flex-wrap: wrap;
     flex-direction: column;
 }
 
 .state-buttons {
-    background-color: darkslategray;
+    display: flex;
 }
 
-.state-buttons button {
+.state-buttons button {    
+    background-color: palegoldenrod;
     height: 100px;
     width: 150px;
-}
-
-.number-buttons {
-    background-color: green;
-}
-
-.number-buttons #button-0{
-    width: 300px;
 }
 
 .right-buttons {
     display: flex;
     flex-direction: column;
-    background-color: #f33131af;
 }
 
 .right-buttons button {

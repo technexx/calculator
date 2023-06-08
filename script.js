@@ -71,7 +71,6 @@ function setOperationButtonListeners() {
             }
 
             if (item.id === "equals-button" || containsOperativeSymbol(equationDisplay.textContent)) {
-                console.log("okay")
                 if (workingNumberArray.length === 2) {
                     equationDisplay.textContent = performOperation(typeOfCalculation, workingNumberArray[0], workingNumberArray[1])
                 }
