@@ -111,6 +111,8 @@ function performOperation() {
     workingNumberArray.pop()
     equationDisplay.textContent = answer
 
+    operatorSymbol = ""
+
     console.log("end operation array is " + workingNumberArray)
 
 }
@@ -134,7 +136,7 @@ function operationResult(typeOfOperation, numOne, numTwo) {
 }
 
 function containsOperativeSymbol(equation) {
-    return (equation.includes("-") || equation.includes("+") || equation.includes("*", equation.includes("/")))
+    return operatorSymbol !== ""
 }
 
 function setWorkingNumberArray(numOne, numTwo) {
@@ -156,7 +158,6 @@ function setStateButtonListeners() {
             if (item.id === "percent-button") {
                 if (equationDisplay.textContent !== 0 && !equationDisplay.textContent.includes("%") && !equationDisplay.textContent .includes("-")) equationDisplay.textContent  += " %"
             }
-            
         })
     });
 }
