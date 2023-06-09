@@ -12,7 +12,7 @@
     display: flex;
     justify-content: end;
     align-items: center;
-    background-color: purple;
+    background-color: rgb(184, 93, 184);
     color: black;
     height: 100px;
 }
@@ -52,4 +52,23 @@
     background-color: aqua;
     height: 100px;
     width: 150px;
+}
+
+
+.state-buttons button:hover {
+    background: rgb(204, 202, 176);
+}
+
+
+.number-buttons button:hover {
+    background: #cdd5d8;
+}
+
+.right-buttons button:hover {
+    background: rgb(78, 204, 204);
+}
+
+.all-buttons button:active {
+    background: rgb(224, 224, 217);
+
 }

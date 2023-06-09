@@ -60,6 +60,8 @@ function setNumberButtonListeners(element, position) {
     })
 }
 
+//Todo: Non-divisble by whole (e.g. 5) followed by divisor gives us NaN
+//Todo: +/0 and % buttons
 function setOperationButtonListeners() {
     let buttons = document.querySelectorAll(".right-buttons button")
     console.log(buttons)
