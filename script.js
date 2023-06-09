@@ -60,11 +60,10 @@ function setNumberButtonListeners(element, position) {
     })
 }
 
-//Todo: Non-divisble by whole (e.g. 5) followed by divisor gives us NaN
+//Todo: Decimal numbers round down (e.g. 0.5 * 10 = 0)
 //Todo: +/0 and % buttons
 function setOperationButtonListeners() {
     let buttons = document.querySelectorAll(".right-buttons button")
-    console.log(buttons)
 
     buttons.forEach((item) => {
         item.addEventListener("click", () => {
@@ -88,6 +87,7 @@ function setOperationButtonListeners() {
                 equationDisplay.textContent  += " * "
                 typeOfCalculation = "multiplication"
                 operatorSymbol = "*"
+                console.log(equationDisplay.textContent)
             }
 
             if (item.id === "subtract-button") {
@@ -141,10 +141,6 @@ function containsOperativeSymbol(equation) {
     return operatorSymbol !== ""
 }
 
-function setWorkingNumberArray(numOne, numTwo) {
-    
-}
-
 function setStateButtonListeners() {
     let buttons = document.querySelectorAll(".state-buttons button")
 
@@ -152,7 +148,7 @@ function setStateButtonListeners() {
         item.addEventListener("click", () => {
             if (item.id === "clear-button") {
                 equationDisplay.textContent = 0
-                workingNumberArray = ["0"]
+                workingNumberArray = []
             }
             if (item.id === "pos-neg-toggle-button") {
                 if (equationDisplay.textContent !== 0 && !equationDisplay.textContent.includes("-")) equationDisplay.textContent = "- " + equationDisplay.textContent;
