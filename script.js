@@ -12,10 +12,10 @@ setStateButtonListeners()
 setOperationButtonListeners()
 
 for (let i=0; i<numberButtonArray.length; i++) {
-    createValueButtons(i)
+    createNumberButtons(i)
 }
 
-function createValueButtons(position) {
+function createNumberButtons(position) {
     const content = document.createElement("button")
     content.id = ("id", "button-" + numberButtonArray[position])
     content.textContent = numberButtonArray[position]
@@ -54,13 +54,9 @@ function setNumberButtonListeners(element, position) {
             storedValue = splitString[1]
             workingNumberArray[1] = storedValue
         }
-
-        console.log("stored value is " + storedValue)
-        console.log("working numberarray is " + workingNumberArray)
     })
 }
 
-//TODO: Decimal numbers round down (e.g. 0.5 * 10 = 0)
 //TODO: +/0 and % buttons
 function setOperationButtonListeners() {
     let buttons = document.querySelectorAll(".right-buttons button")
@@ -154,8 +150,20 @@ function setStateButtonListeners() {
                 equationDisplay.textContent = 0
                 workingNumberArray = []
             }
+            //Todo: Variable is changing from array to simple integer.
             if (item.id === "pos-neg-toggle-button") {
-                if (equationDisplay.textContent !== 0 && !equationDisplay.textContent.includes("-")) equationDisplay.textContent = "- " + equationDisplay.textContent;
+                if (equationDisplay.textContent !== 0 && workingNumberArray.length === 1) {
+                    if (!equationDisplay.textContent.includes("-")) {
+                        workingNumberArray[0] = "-"  + workingNumberArray[0]
+
+                        console.log("with minus " + workingNumberArray)
+
+                    } else {
+                        workingNumberArray[0] = workingNumberArray[0].replace("-", "")
+                    }
+                }
+                
+                equationDisplay.textContent = workingNumberArray[0]
             }
             if (item.id === "percent-button") {
                 if (equationDisplay.textContent !== 0 && !equationDisplay.textContent.includes("%") && !equationDisplay.textContent .includes("-")) equationDisplay.textContent  += " %"
