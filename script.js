@@ -60,8 +60,8 @@ function setNumberButtonListeners(element, position) {
     })
 }
 
-//Todo: Decimal numbers round down (e.g. 0.5 * 10 = 0)
-//Todo: +/0 and % buttons
+//TODO: Decimal numbers round down (e.g. 0.5 * 10 = 0)
+//TODO: +/0 and % buttons
 function setOperationButtonListeners() {
     let buttons = document.querySelectorAll(".right-buttons button")
 
@@ -109,13 +109,17 @@ function setOperationButtonListeners() {
 function performOperation() {
     let answer = operationResult(typeOfCalculation, workingNumberArray[0], workingNumberArray[1])
 
+    console.log(answer)
+
+    if (answer.includes(".")) {
+        answer = parseFloat(answer).toFixed(2)
+    }
+
     workingNumberArray[0] = answer
     workingNumberArray.pop()
     equationDisplay.textContent = answer
 
     operatorSymbol = ""
-
-    console.log("end operation array is " + workingNumberArray)
 
 }
 
@@ -124,16 +128,16 @@ function operationResult(typeOfOperation, numOne, numTwo) {
     numTwo = parseInt(numTwo)
 
     if (typeOfOperation == "division") {
-        return numOne / numTwo
+        return (numOne / numTwo).toString()
     }
     if (typeOfOperation == "multiplication") {
-        return numOne * numTwo
+        return (numOne * numTwo).toString()
     }
     if (typeOfOperation == "subtraction") {
-        return numOne - numTwo
+        return (numOne - numTwo).toString()
     }
     if (typeOfOperation == "addition") {
-        return numOne + numTwo
+        return (numOne + numTwo).toString()
     }
 }
 
