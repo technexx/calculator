@@ -1,5 +1,5 @@
-const equationDisplay = document.querySelector(".display")
-const leftButtonsContainer = document.querySelector(".number-buttons")
+const equationDisplay = document.querySelector("#display-text")
+const numberButtonClass = document.querySelector(".number-buttons")
 const numberButtonArray = ["7", "8", "9", "4", "5", "6", "1", "2" ,"3", "0", "."]
 
 equationDisplay.textContent = "0"
@@ -24,7 +24,7 @@ function createValueButtons(position) {
 
     if (position === 9) content.style.width = "300px"
 
-    leftButtonsContainer.appendChild(content)
+    numberButtonClass.appendChild(content)
 
     setNumberButtonListeners(content, position)
 }
