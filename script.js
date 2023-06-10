@@ -49,15 +49,17 @@ function setNumberButtonListeners(element, position) {
             storedValue = equationDisplay.textContent
             workingNumberArray[0] = storedValue
         } else {
+            //Todo: Splitting w/ "-" b0rks negative numbers
             let equationString = equationDisplay.textContent.toString()
-            let splitString = equationString.split(operatorSymbol)
+            let splitString = equationString.split(" " + operatorSymbol + " ")
+
             storedValue = splitString[1]
             workingNumberArray[1] = storedValue
         }
     })
 }
 
-//TODO: +/0 and % buttons
+//TODO: % button
 function setOperationButtonListeners() {
     let buttons = document.querySelectorAll(".right-buttons button")
 
@@ -102,17 +104,21 @@ function setOperationButtonListeners() {
     });
 }
 
+//Todo: Storing numbers wrong for some operations.
+    //Todo: Second array position is incorrect.
 function performOperation() {
     let answer = operationResult(typeOfCalculation, workingNumberArray[0], workingNumberArray[1])
 
-    console.log(answer)
+    // console.log("first pos is " + workingNumberArray[0])
+    // console.log("second pos is " + workingNumberArray[1])
+    // console.log("answer is " + answer)
 
     if (answer.includes(".")) {
         answer = parseFloat(answer).toFixed(2)
     }
 
-    workingNumberArray[0] = answer
     workingNumberArray.pop()
+    workingNumberArray[0] = answer
     equationDisplay.textContent = answer
 
     operatorSymbol = ""
