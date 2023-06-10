@@ -59,7 +59,6 @@ function setNumberButtonListeners(element, position) {
     })
 }
 
-//TODO: % button
 function setOperationButtonListeners() {
     let buttons = document.querySelectorAll(".right-buttons button")
 
@@ -85,7 +84,6 @@ function setOperationButtonListeners() {
                 equationDisplay.textContent  += " * "
                 typeOfCalculation = "multiplication"
                 operatorSymbol = "*"
-                console.log(equationDisplay.textContent)
             }
 
             if (item.id === "subtract-button") {
@@ -104,43 +102,48 @@ function setOperationButtonListeners() {
     });
 }
 
-//Todo: Storing numbers wrong for some operations.
-    //Todo: Second array position is incorrect.
+
+//BUG: Multiplication rounds/does not use decimals.
+    //Rounding is done within operationResult(), and needs to be addressed there.
+//TODO: % button
+//TODO: Allow option to switch operator before second number
+
 function performOperation() {
     let answer = operationResult(typeOfCalculation, workingNumberArray[0], workingNumberArray[1])
 
-    // console.log("first pos is " + workingNumberArray[0])
-    // console.log("second pos is " + workingNumberArray[1])
-    // console.log("answer is " + answer)
-
-    if (answer.includes(".")) {
-        answer = parseFloat(answer).toFixed(2)
-    }
-
-    workingNumberArray.pop()
-    workingNumberArray[0] = answer
     equationDisplay.textContent = answer
 
     operatorSymbol = ""
-
 }
 
 function operationResult(typeOfOperation, numOne, numTwo) {
-    numOne = parseInt(numOne)
-    numTwo = parseInt(numTwo)
+    numOne = parseFloat(numOne)
+    numTwo = parseFloat(numTwo)
+    let answer = 0
 
     if (typeOfOperation == "division") {
-        return (numOne / numTwo).toString()
+        answer = (numOne / numTwo)
     }
     if (typeOfOperation == "multiplication") {
-        return (numOne * numTwo).toString()
+        answer = (numOne * numTwo)
     }
     if (typeOfOperation == "subtraction") {
-        return (numOne - numTwo).toString()
+        answer = (numOne - numTwo)
     }
     if (typeOfOperation == "addition") {
-        return (numOne + numTwo).toString()
+        answer = (numOne + numTwo)
     }
+
+    console.log(answer)
+    console.log(typeof answer)
+
+    if (answer % 1 === 0) {
+        answer = answer.toFixed(0)
+    } else {
+        answer = answer.toFixed(2)
+    }
+
+    return answer
 }
 
 function containsOperativeSymbol(equation) {
@@ -156,13 +159,10 @@ function setStateButtonListeners() {
                 equationDisplay.textContent = 0
                 workingNumberArray = []
             }
-            //Todo: Variable is changing from array to simple integer.
             if (item.id === "pos-neg-toggle-button") {
                 if (equationDisplay.textContent !== 0 && workingNumberArray.length === 1) {
                     if (!equationDisplay.textContent.includes("-")) {
                         workingNumberArray[0] = "-"  + workingNumberArray[0]
-
-                        console.log("with minus " + workingNumberArray)
 
                     } else {
                         workingNumberArray[0] = workingNumberArray[0].replace("-", "")
