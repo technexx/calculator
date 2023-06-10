@@ -102,9 +102,6 @@ function setOperationButtonListeners() {
     });
 }
 
-
-//BUG: Multiplication rounds/does not use decimals.
-    //Rounding is done within operationResult(), and needs to be addressed there.
 //TODO: % button
 //TODO: Allow option to switch operator before second number
 
@@ -133,9 +130,6 @@ function operationResult(typeOfOperation, numOne, numTwo) {
     if (typeOfOperation == "addition") {
         answer = (numOne + numTwo)
     }
-
-    console.log(answer)
-    console.log(typeof answer)
 
     if (answer % 1 === 0) {
         answer = answer.toFixed(0)
@@ -172,8 +166,17 @@ function setStateButtonListeners() {
                 equationDisplay.textContent = workingNumberArray[0]
             }
             if (item.id === "percent-button") {
-                if (equationDisplay.textContent !== 0 && !equationDisplay.textContent.includes("%") && !equationDisplay.textContent .includes("-")) equationDisplay.textContent  += " %"
+                if (equationDisplay.textContent !== 0 && !equationDisplay.textContent.includes("%") && !containsOperativeSymbol(equationDisplay.textContent)) {
+                    equationDisplay.textContent = calculatePct(equationDisplay.textContent)
+                } 
             }
         })
     });
+}
+
+function calculatePct(value) {
+    let valueToReturn = parseFloat(value)
+    valueToReturn /= 100
+
+    return (valueToReturn)
 }
