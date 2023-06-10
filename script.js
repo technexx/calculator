@@ -119,6 +119,10 @@ function operationResult(typeOfOperation, numOne, numTwo) {
     let answer = 0
 
     if (typeOfOperation == "division") {
+        if (numTwo === 0) {
+            workingNumberArray = [0, 0]
+            return "y u deevyde by 0?"
+        }
         answer = (numOne / numTwo)
     }
     if (typeOfOperation == "multiplication") {
@@ -176,7 +180,7 @@ function setStateButtonListeners() {
 
 function calculatePct(value) {
     let valueToReturn = parseFloat(value)
-    valueToReturn /= 100
+    (valueToReturn /= 100).toFixed(8)
 
     return (valueToReturn)
 }
